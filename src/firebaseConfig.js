@@ -1,29 +1,31 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getAuth,GoogleAuthProvider} from 'firebase/auth'
-import {getFirestore} from 'firebase/firestore'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAQr1F2T0EcPNnsk9ck2eb8qX8x1n-ozik",
-  authDomain: "blogproject-d4ff6.firebaseapp.com",
-  projectId: "blogproject-d4ff6",
-  storageBucket: "blogproject-d4ff6.firebasestorage.app",
-  messagingSenderId: "697462124027",
-  appId: "1:697462124027:web:3eb45bc616f99a239aaf5e",
-  measurementId: "G-R4BT9J5DTJ",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASURMENT_ID
 };
 
 // Initialize Firebase
+//console.log(firebaseConfig);
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-export const auth=getAuth(app)
-export const provider=new GoogleAuthProvider()
+export const auth = getAuth(app)
+export const provider = new GoogleAuthProvider()
 provider.setCustomParameters({
-  prompt:"select_account"
+  prompt: "select_account"
 })
-export const db=getFirestore(app)
+export const db = getFirestore(app)

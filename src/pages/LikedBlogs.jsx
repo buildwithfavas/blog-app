@@ -20,16 +20,14 @@ export default function LikedBlogs() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-blue-900 via-black to-gray-900 text-white p-6">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-center">❤️ Your Liked Blogs</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          ❤️ Your Liked Blogs
+        </h2>
 
         {liked.length > 0 ? (
           <div className="space-y-6 overflow-y-auto max-h-[80vh] px-2">
             {liked.map((b) => (
-              <BlogList
-                key={b.id}
-                blog={b}
-                HandleDelete={() => {}}
-              />
+              <BlogList key={b.id} blog={b} HandleDelete={() => {}} />
             ))}
           </div>
         ) : (

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import background from "../assets/blogBG.jpg";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useAuth } from "../context/AuthContext.jsx";
 import { auth, provider } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import googleIcon from "../assets/google.png";
+import { toast } from "react-toastify";
+
 const Login = () => {
   const [manage, setManage] = useState("Login");
   const [email, setEmail] = useState("");
@@ -14,44 +16,62 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login, signUp } = useAuth();
+
+  function validateInputsEmailAndPassword() {
+    if (email === "" || password === "") {
+      toast.warn("Fill the valid fields");
+      return false;
+    }
+    return true;
+  }
+
   //   HandleLogin
   async function HandleLogin(e) {
     e.preventDefault();
     setError("");
     setLoading(true);
-    try {
-      await login(email, password);
-      navigate("/blog");
-    } catch (error) {
-      setError("Failed to Login" + error.message);
+    if (validateInputsEmailAndPassword()) {
+      try {
+        await login(email, password);
+        navigate("/blog");
+      } catch (error) {
+        setError("Failed to Login" + error.message);
+      }
     }
     setLoading(false);
   }
+
   //   Handle google Account
   async function HandleGoogleAccount() {
     setError("");
     setLoading(true);
-    try {
-      await signInWithPopup(auth, provider);
-      navigate("/blog",{replace:true});
-    } catch (error) {
-      setError("failed to Login using google account" + error.message);
+    if (validateInputsEmailAndPassword()) {
+      try {
+        await signInWithPopup(auth, provider);
+        navigate("/blog", { replace: true });
+      } catch (error) {
+        setError("failed to Login using google account" + error.message);
+      }
     }
     setLoading(false);
   }
+
   //handle SignUp
   async function HandleSignUp(e) {
     e.preventDefault();
     setError("");
     setLoading(true);
-    try {
-      await signUp(email, password);
-      navigate("/blog");
-    } catch (error) {
-      setError("failed to SignUp " + error.message);
+    if (validateInputsEmailAndPassword()) {
+      try {
+        await signUp(email, password);
+        navigate("/blog");
+      } catch (error) {
+        setError("failed to SignUp " + error.message);
+      }
     }
     setLoading(false);
   }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">

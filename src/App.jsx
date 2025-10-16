@@ -1,5 +1,4 @@
-import React from "react";
-import { Route, Routes, Router, Link } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Blog from "./pages/Blog";
 import Login from "./pages/Login";
 import RedirectRoute from "./components/RedirectRoute";
@@ -11,6 +10,7 @@ import Landing from "./pages/Landing";
 import { ToastContainer } from "react-toastify";
 import Notfound from "./components/Notfound";
 import LikedBlogs from "./pages/LikedBlogs";
+
 const App = () => {
   return (
     <>
@@ -66,6 +66,7 @@ const App = () => {
         />
         <Route path="*" element={<Notfound />} />
       </Routes>
+
       <ToastContainer
         position="top-right"
         autoClose={3000}

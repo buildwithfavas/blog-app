@@ -1,10 +1,10 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { currentUser, logOut } = useAuth();
   const navigate = useNavigate();
+
   async function HandleLogOut() {
     try {
       await logOut();
@@ -13,12 +13,10 @@ const Navbar = () => {
       console.log(error);
     }
   }
+
   return (
     <div>
-      <header
-        className="w-full min-h-10 flex items-center justify-between text-white  bg-gradient-to-r from-[#0f172a] via-[#1e3a8a] to-[#0f172a]
- shadow-md  p-4 fixed top-0 z-[1000]"
-      >
+      <header className="w-full min-h-10 flex items-center justify-between text-white  bg-gradient-to-r from-[#0f172a] via-[#1e3a8a] to-[#0f172a] shadow-md  p-4 fixed top-0 z-[1000]">
         <Link
           to="/"
           className="text-3xl font-extrabold tracking-wide bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 
@@ -30,7 +28,7 @@ const Navbar = () => {
           {currentUser && (
             <Link to={"/liked"}>
               <button className="bg-gradient-to-r from-indigo-700 via-purple-900 to-indigo-900 rounded-full px-5 py-2 font-semibold text-sm cursor-pointer hover:border border-amber-100">
-               favourites 🩷
+                favourites 🩷
               </button>
             </Link>
           )}

@@ -1,15 +1,17 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import React, { useState } from "react";
+import { useState } from "react";
 import { db } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 const AddBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageURL, setImageURL] = useState("");
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+
   // function to add
   async function HandleSubmit(e) {
     e.preventDefault();

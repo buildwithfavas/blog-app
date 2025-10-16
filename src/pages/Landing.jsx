@@ -1,17 +1,11 @@
-import React from "react";
-import landing from "../assets/landing.jpg";
+import landing from "../assets/landing.jpeg";
+
 const Landing = () => {
   return (
     <div className="min-h-screen grid grid-cols-2 gap-5 items-center justify-center  w-full bg-gradient-to-r from-indigo-900 via-black to-gray-900">
       <div className="flex flex-col items-center justify-center   text-white p-8">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-          Welcome to{" "}
-          <span
-            className="text-5xl font-extrabold tracking-wide bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 
-                   bg-clip-text text-transparent drop-shadow-lg hover:scale-105 transition-transform duration-300"
-          >
-            Blog
-          </span>
+          Welcome to Blog
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mb-6 text-center max-w-2xl">
           Discover insightful articles, tips, and stories from our community of
@@ -20,7 +14,7 @@ const Landing = () => {
 
         <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg max-w-xl text-center">
           <h2 className="text-2xl font-bold text-indigo-300 mb-3">
-            Access Restricted
+            Please Login to Continue
           </h2>
           <p className="text-gray-200 mb-4">
             To read our blogs, please{" "}
@@ -34,10 +28,7 @@ const Landing = () => {
               Interact with a community of passionate readers and writers.
             </li>
           </ul>
-          <p className="text-indigo-400 font-semibold">
-            Log in now to unlock all blog posts and become part of the Blog
-            community!
-          </p>
+          <p className="text-indigo-400 font-semibold">Please Login</p>
         </div>
       </div>
 

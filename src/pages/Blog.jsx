@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react";
+import { db } from "../firebaseConfig";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import BlogList from "../components/BlogList";
 import {
   collection,
   deleteDoc,
@@ -6,16 +11,12 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { db } from "../firebaseConfig";
-import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { toast } from "react-toastify";
-import BlogList from "../components/BlogList";
+
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
+
   //fetching from firebase
   useEffect(() => {
     async function fetchFireBaseData() {
@@ -29,9 +30,9 @@ const Blog = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(blogSet)
+        console.log(blogSet);
         setBlogs(blogSet);
-        console.log(blogs)
+        console.log(blogs);
         setLoading(false);
       } catch (error) {
         toast.error(error.message);
@@ -39,7 +40,7 @@ const Blog = () => {
     }
     fetchFireBaseData();
   }, []);
-  //-------------
+
   // Deleting function
   async function HandleDelete(id, author) {
     if (currentUser?.email !== author) {
@@ -60,7 +61,7 @@ const Blog = () => {
       toast.error(error.message);
     }
   }
-  // ----------
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
@@ -73,11 +74,9 @@ const Blog = () => {
       </div>
     );
   }
+
   return (
-    <div
-      className="h-screen w-full bg-gradient-to-r from-[#0f172a] via-black to-[#1e293b]
- flex justify-center overflow-y-auto"
-    >
+    <div className="h-screen w-full bg-gradient-to-r from-[#0f172a] via-black to-[#1e293b] flex justify-center overflow-y-auto">
       {blogs.length === 0 ? (
         <div className="flex items-center justify-center flex-col">
           <h1 className="text-white text-center  text-6xl font-bold">

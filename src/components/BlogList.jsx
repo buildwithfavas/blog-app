@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import edit from "../assets/edit.png";
 import deleteIcon from "../assets/delete.png";
 import { Link } from "react-router-dom";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+
 const BlogList = ({ blog, HandleDelete }) => {
   const { currentUser } = useAuth();
   const [likes, setLikes] = useState(blog.likes || []);
   const hasLiked = currentUser?.uid && likes.includes(currentUser.uid);
+
   //toggleLike
   async function ToggleLike() {
     const blogRef = doc(db, "blogs", blog.id);
@@ -28,6 +30,7 @@ const BlogList = ({ blog, HandleDelete }) => {
       alert("error");
     }
   }
+
   return (
     <div
       key={blog.id}

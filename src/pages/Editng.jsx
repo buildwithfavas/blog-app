@@ -1,6 +1,6 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { replace, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { toast } from "react-toastify";
 
@@ -9,6 +9,7 @@ const Editng = () => {
   const [content, setContent] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
+
   //fetching those data
   useEffect(() => {
     async function fetchBlog() {
@@ -33,6 +34,7 @@ const Editng = () => {
     }
     fetchBlog();
   }, [id]);
+
   //handleUpdate feature
   async function HandleEdit(e) {
     e.preventDefault();
@@ -49,6 +51,7 @@ const Editng = () => {
       toast.error(error.message);
     }
   }
+
   return (
     <div className="h-screen w-full bg-black flex items-center justify-center">
       <div className="max-w-2xl mx-auto mt-16 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8 rounded-2xl shadow-2xl shadow-black/50">
