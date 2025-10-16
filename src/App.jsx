@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import Blog from "./pages/Blog";
 import Login from "./pages/Login";
-import RedirectRoute from "./components/RedirectRoute";
-import ProtectedRoute from "./components/ProtectedRoute";
 import AddBlog from "./pages/AddBlog";
 import Editng from "./pages/Editng";
-import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
-import { ToastContainer } from "react-toastify";
-import Notfound from "./components/Notfound";
 import LikedBlogs from "./pages/LikedBlogs";
+import RedirectRoute from "./components/RedirectRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
+import Notfound from "./components/Notfound";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (

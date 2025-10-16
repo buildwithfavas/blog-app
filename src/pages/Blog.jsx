@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
+//import "react-toastify/dist/ReactToastify.css";
 import BlogList from "../components/BlogList";
 import {
   collection,
@@ -30,9 +31,9 @@ const Blog = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(blogSet);
+        //console.log(blogSet);
         setBlogs(blogSet);
-        console.log(blogs);
+        //console.log(blogs);
         setLoading(false);
       } catch (error) {
         toast.error(error.message);
@@ -55,7 +56,7 @@ const Blog = () => {
     }
     try {
       await deleteDoc(doc(db, "blogs", id));
-      window.alert("deleted Successfully");
+      toast.success("deleted Successfully");
       setBlogs((prev) => prev.filter((blog) => blog.id !== id));
     } catch (error) {
       toast.error(error.message);

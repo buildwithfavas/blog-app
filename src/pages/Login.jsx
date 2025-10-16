@@ -1,14 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import background from "../assets/blogBG.jpg";
+import googleIcon from "../assets/google.png";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useAuth } from "../context/AuthContext.jsx";
 import { auth, provider } from "../firebaseConfig";
-import { useNavigate } from "react-router-dom";
-import googleIcon from "../assets/google.png";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const [manage, setManage] = useState("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -45,13 +44,11 @@ const Login = () => {
   async function HandleGoogleAccount() {
     setError("");
     setLoading(true);
-    if (validateInputsEmailAndPassword()) {
-      try {
-        await signInWithPopup(auth, provider);
-        navigate("/blog", { replace: true });
-      } catch (error) {
-        setError("failed to Login using google account" + error.message);
-      }
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/blog", { replace: true });
+    } catch (error) {
+      setError("failed to Login using google account" + error.message);
     }
     setLoading(false);
   }
@@ -96,7 +93,7 @@ const Login = () => {
       </div>
       <div className=" bg-black p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold uppercase mb-6 text-center text-white">
-          {manage}
+          {haveAccount ? "Login" : "SignUp"}
         </h2>
         <form
           className="space-y-2"
@@ -131,12 +128,11 @@ const Login = () => {
             </p>
             <img src={googleIcon} alt="google" className="w-6" />
           </div>
-          {manage !== "SignUp" ? (
+          {haveAccount ? (
             <p
               className="font-bold text-white italic text-sm text-center cursor-pointer hover:text-red-400"
               onClick={() => {
                 setHaveAccount(false);
-                setManage("SignUp");
                 setEmail("");
                 setPassword("");
               }}
@@ -148,7 +144,6 @@ const Login = () => {
               className="font-bold text-white italic text-sm text-center cursor-pointer hover:text-red-400"
               onClick={() => {
                 setHaveAccount(true);
-                setManage("Login");
                 setEmail("");
                 setPassword("");
               }}

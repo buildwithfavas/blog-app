@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import edit from "../assets/edit.png";
+import editIcon from "../assets/edit.png";
 import deleteIcon from "../assets/delete.png";
 import { Link } from "react-router-dom";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
@@ -27,7 +27,7 @@ const BlogList = ({ blog, HandleDelete }) => {
         setLikes([...likes, currentUser.uid]); // update UI
       }
     } catch (error) {
-      alert("error");
+      alert("error: " + error);
     }
   }
 
@@ -80,7 +80,7 @@ const BlogList = ({ blog, HandleDelete }) => {
               to={`/edit/${blog.id}`}
               className="p-2  hover:bg-indigo-300 rounded-lg shadow-md transition-colors"
             >
-              <img src={edit} alt="edit" className="w-6" />
+              <img src={editIcon} alt="editIcon" className="w-6" />
             </Link>
           </div>
         )}

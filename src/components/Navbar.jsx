@@ -28,7 +28,7 @@ const Navbar = () => {
           {currentUser && (
             <Link to={"/liked"}>
               <button className="bg-gradient-to-r from-indigo-700 via-purple-900 to-indigo-900 rounded-full px-5 py-2 font-semibold text-sm cursor-pointer hover:border border-amber-100">
-                favourites 🩷
+                Liked 🩷
               </button>
             </Link>
           )}
