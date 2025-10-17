@@ -8,5 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
-  base: import.meta.env.VITE_BASE_PATH || "/BlogApp",
+  base: import.meta.env.VITE_BASE_PATH || "/blog-app",
 });
