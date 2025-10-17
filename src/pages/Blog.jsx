@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
-import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import BlogList from "../components/BlogList";
 import {
   collection,
@@ -16,7 +15,6 @@ import {
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
 
   //fetching from firebase
   useEffect(() => {
@@ -43,24 +41,58 @@ const Blog = () => {
   }, []);
 
   // Deleting function
-  async function HandleDelete(id, author) {
-    if (currentUser?.email !== author) {
-      toast.error("You can delete only your blogs");
-      return;
-    }
-    const confirm = window.confirm(
-      "Are you sure you want to delete these blog"
+  function HandleDelete(id) {
+    // show confirm toast
+    toast(
+      ({ closeToast }) => (
+        <div>
+          <p className="font-medium">
+            Are you sure you want to delete this blog?
+          </p>
+          <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+            <button
+              onClick={async () => {
+                try {
+                  await deleteDoc(doc(db, "blogs", id));
+                  toast.success("Deleted Successfully");
+                  setBlogs((prev) => prev.filter((blog) => blog.id !== id));
+                } catch (error) {
+                  toast.error(error.message);
+                }
+                closeToast(); // closes the confirm toast
+              }}
+              style={{
+                backgroundColor: "#dc2626",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                borderRadius: "5px",
+              }}
+            >
+              Yes
+            </button>
+            <button
+              onClick={closeToast}
+              style={{
+                backgroundColor: "#9ca3af",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                borderRadius: "5px",
+              }}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        autoClose: false, // stays until user clicks
+        closeOnClick: false,
+        draggable: false,
+        position: "top-center",
+      }
     );
-    if (!confirm) {
-      return;
-    }
-    try {
-      await deleteDoc(doc(db, "blogs", id));
-      toast.success("deleted Successfully");
-      setBlogs((prev) => prev.filter((blog) => blog.id !== id));
-    } catch (error) {
-      toast.error(error.message);
-    }
   }
 
   if (loading) {
@@ -91,9 +123,9 @@ const Blog = () => {
         <div className="mt-20 w-3/4 flex flex-col gap-6">
           {blogs.map((blog) => (
             <BlogList
-              key={Math.random() * 1000}
+              key={blog.id}
               blog={blog}
-              HandleDelete={HandleDelete}
+              HandleDelete={() => HandleDelete(blog.id)}
             />
           ))}
         </div>

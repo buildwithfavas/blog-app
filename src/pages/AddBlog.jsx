@@ -9,12 +9,16 @@ const AddBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [loading, setLoading] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   // function to add
   async function HandleSubmit(e) {
     e.preventDefault();
+    if (loading) return; // prevent double submission
+    setLoading(true);
+
     try {
       if (onPostValidation()) {
         await addDoc(collection(db, "blogs"), {
@@ -30,6 +34,8 @@ const AddBlog = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 

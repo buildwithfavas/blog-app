@@ -26,14 +26,14 @@ const Editng = () => {
           setTitle(blogData.title);
           setContent(blogData.content);
         } else {
-          window.alert("no such data exists");
+          toast.error("no such data exists");
         }
       } catch (error) {
         toast.error(error.message);
       }
     }
     fetchBlog();
-  }, [id]);
+  }, [id, navigate]);
 
   //handleUpdate feature
   async function HandleEdit(e) {
@@ -44,7 +44,7 @@ const Editng = () => {
         title,
         content,
       });
-      console.log("data added");
+      //console.log("data added");
       toast.success("Data updated successfully");
       navigate("/blog", { replace: true });
     } catch (error) {

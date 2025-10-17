@@ -72,7 +72,7 @@ const BlogList = ({ blog, HandleDelete }) => {
           <div className="flex gap-4 mt-3">
             <button
               className="p-2  hover:border hover:border-red-400 rounded-lg shadow-md transition-colors"
-              onClick={() => HandleDelete(blog.id, blog.author)}
+              onClick={() => HandleDelete(blog.id)}
             >
               <img src={deleteIcon} alt="delete" className="w-6" />
             </button>
