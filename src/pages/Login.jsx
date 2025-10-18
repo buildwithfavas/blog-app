@@ -17,8 +17,11 @@ const Login = () => {
   const { login, signUp } = useAuth();
 
   function validateInputsEmailAndPassword() {
-    if (email === "" || password === "") {
-      toast.warn("Fill the valid fields");
+    if (email === "") {
+      toast.warn("Please fill the Email");
+      return false;
+    } else if (password === "") {
+      toast.warn("Please fill the password");
       return false;
     }
     return true;
@@ -34,7 +37,8 @@ const Login = () => {
         await login(email, password);
         navigate("/blog");
       } catch (error) {
-        setError("Failed to Login" + error.message);
+        toast.warn("Invalid Username or Password");
+        //setError("Failed to Login" + error.message);
       }
     }
     setLoading(false);
