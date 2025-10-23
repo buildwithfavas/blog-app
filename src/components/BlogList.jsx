@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import editIcon from "../assets/edit.png";
 import deleteIcon from "../assets/delete.png";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
-const BlogList = ({ blog, HandleDelete }) => {
+const BlogList = React.memo(({ blog, HandleDelete }) => {
   const { currentUser } = useAuth();
   const [likes, setLikes] = useState(blog.likes || []);
   const hasLiked = currentUser?.uid && likes.includes(currentUser.uid);
@@ -87,6 +87,6 @@ const BlogList = ({ blog, HandleDelete }) => {
       </div>
     </div>
   );
-};
+});
 
 export default BlogList;

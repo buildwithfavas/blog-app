@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { db } from "../firebaseConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -39,6 +39,16 @@ const Blog = () => {
     }
     fetchFireBaseData();
   }, []);
+
+  const memoizedBlogList = useMemo(() => {
+    return blogs.map((blog) => (
+      <BlogList
+        key={blog.id}
+        blog={blog}
+        HandleDelete={() => HandleDelete(blog.id)}
+      />
+    ));
+  }, [blogs, HandleDelete]);
 
   // Deleting function
   function HandleDelete(id) {
@@ -121,13 +131,7 @@ const Blog = () => {
         </div>
       ) : (
         <div className="mt-20 w-3/4 flex flex-col gap-6">
-          {blogs.map((blog) => (
-            <BlogList
-              key={blog.id}
-              blog={blog}
-              HandleDelete={() => HandleDelete(blog.id)}
-            />
-          ))}
+          {memoizedBlogList}
         </div>
       )}
     </div>
