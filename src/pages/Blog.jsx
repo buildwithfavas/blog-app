@@ -41,6 +41,61 @@ const Blog = () => {
   }, []);
 
   const memoizedBlogList = useMemo(() => {
+    // Deleting function
+    function HandleDelete(id) {
+      // show confirm toast
+      toast(
+        ({ closeToast }) => (
+          <div>
+            <p className="font-medium">
+              Are you sure you want to delete this blog?
+            </p>
+            <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+              <button
+                onClick={async () => {
+                  try {
+                    await deleteDoc(doc(db, "blogs", id));
+                    toast.success("Deleted Successfully");
+                    setBlogs((prev) => prev.filter((blog) => blog.id !== id));
+                  } catch (error) {
+                    toast.error(error.message);
+                  }
+                  closeToast(); // closes the confirm toast
+                }}
+                style={{
+                  backgroundColor: "#dc2626",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "5px",
+                }}
+              >
+                Yes
+              </button>
+              <button
+                onClick={closeToast}
+                style={{
+                  backgroundColor: "#9ca3af",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "5px",
+                }}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          autoClose: false, // stays until user clicks
+          closeOnClick: false,
+          draggable: false,
+          position: "top-center",
+        }
+      );
+    }
+
     return blogs.map((blog) => (
       <BlogList
         key={blog.id}
@@ -48,62 +103,7 @@ const Blog = () => {
         HandleDelete={() => HandleDelete(blog.id)}
       />
     ));
-  }, [blogs, HandleDelete]);
-
-  // Deleting function
-  function HandleDelete(id) {
-    // show confirm toast
-    toast(
-      ({ closeToast }) => (
-        <div>
-          <p className="font-medium">
-            Are you sure you want to delete this blog?
-          </p>
-          <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-            <button
-              onClick={async () => {
-                try {
-                  await deleteDoc(doc(db, "blogs", id));
-                  toast.success("Deleted Successfully");
-                  setBlogs((prev) => prev.filter((blog) => blog.id !== id));
-                } catch (error) {
-                  toast.error(error.message);
-                }
-                closeToast(); // closes the confirm toast
-              }}
-              style={{
-                backgroundColor: "#dc2626",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "5px",
-              }}
-            >
-              Yes
-            </button>
-            <button
-              onClick={closeToast}
-              style={{
-                backgroundColor: "#9ca3af",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "5px",
-              }}
-            >
-              No
-            </button>
-          </div>
-        </div>
-      ),
-      {
-        autoClose: false, // stays until user clicks
-        closeOnClick: false,
-        draggable: false,
-        position: "top-center",
-      }
-    );
-  }
+  }, [blogs]);
 
   if (loading) {
     return (
